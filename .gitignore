@@ -2,4 +2,7 @@
 bicubic_pytorch/
 
 *.png
+
+*.jpeg
+
 **/__pycache__

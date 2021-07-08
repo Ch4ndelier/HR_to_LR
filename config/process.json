@@ -1,7 +1,7 @@
 {
 	"process1":{
 	"data_num_ratio": 2
-	, "pipline":["downsample", "blur", "jpeg", "noise", "upsample"]
+	, "pipline":["downsample", "blur", "jpeg", "noise", "upsample", "jpeg"]
 	, "downsample_method":"bicubic"
 	, "downsample_scale": 0.5
 	, "jpeg_quality": 50

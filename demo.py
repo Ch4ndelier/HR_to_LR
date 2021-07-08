@@ -34,5 +34,5 @@ for key, cfg in process_dict.items():
     print(cfg["pipline"])
     for method in cfg["pipline"]:
         x = apply(x, cfg, method)
-    cv2.imwrite('demo.png', x)
+    cv2.imwrite('demo_2.png', x)
     exit()
