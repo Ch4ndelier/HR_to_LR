@@ -4,5 +4,5 @@ bicubic_pytorch/
 *.png
 
 *.jpeg
-
+data/
 **/__pycache__

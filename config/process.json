@@ -1,16 +1,35 @@
 {
-	"process1":{
-	"data_num_ratio": 2
-	, "pipline":["downsample", "blur", "jpeg", "noise", "upsample", "jpeg"]
-	, "downsample_method":"bicubic"
-	, "downsample_scale": 0.5
-	, "jpeg_quality": 50
-	, "upsample_method":"bicubic"
-	, "upsample_scale": 2
-	}
+	"in_path":"/Users/liujunyuan/HR_to_LR/data/1k2kminus"
+	,"out_path":"/Users/liujunyuan/HR_to_LR/results/test"
 	,
-	"process2":{
-	"data_num_ratio": 3
-	,"downsample_method":"linear"
+	"process":
+	{
+	"process1":{
+		"data_num_ratio": 2
+		, "pipline":["downsample", "blur", "jpeg", "noise", "upsample", "jpeg"]
+		, "downsample_method":"bicubic"
+		, "downsample_scale": 0.5
+		, "jpeg_quality": 50
+		, "upsample_method":"bicubic"
+		, "upsample_scale": 2
+		}
+	,"process2":{
+		"data_num_ratio": 3
+		, "pipline":["blur", "downsample", "blur", "jpeg", "noise", "upsample", "jpeg"]
+		, "downsample_method":"bilinear"
+		, "downsample_scale": 0.5
+		, "jpeg_quality": 50
+		, "upsample_method":"bicubic"
+		, "upsample_scale": 2
+	}
+	,"process3":{
+		"data_num_ratio": 4
+		, "pipline":["blur", "downsample", "noise", "jpeg", "blur", "upsample", "jpeg", "noise"]
+		, "downsample_method":"bilinear"
+		, "downsample_scale": 0.5
+		, "jpeg_quality": 50
+		, "upsample_method":"bicubic"
+		, "upsample_scale": 2
+	}
 	}	
 }
