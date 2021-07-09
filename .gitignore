@@ -2,7 +2,7 @@
 bicubic_pytorch/
 .DS_Store
 *.png
-
+test.py
 *.jpeg
 data/
 **/__pycache__
