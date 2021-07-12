@@ -2,6 +2,7 @@ from utils.downsampling import img_downsampling
 from utils.noise import add_noise
 from utils.blur import add_blur
 from utils.jpeg import go_jpeg
+import random
 
 
 def apply(x, cfg, method):
@@ -10,7 +11,8 @@ def apply(x, cfg, method):
     elif method == 'blur':
         return add_blur(x)
     elif method == 'jpeg':
-        return go_jpeg(x, qua=cfg['jpeg_quality'])
+        q = random.randint(cfg['jpeg_quality_l'], cfg['jpeg_quality_h'])
+        return go_jpeg(x, q)
     elif method == 'noise':
         return add_noise(x)
     elif method == 'upsample':

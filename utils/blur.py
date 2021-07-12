@@ -1,5 +1,9 @@
 import cv2
+import random
 
 
 def add_blur(img):
-    return cv2.GaussianBlur(img, (7, 7), cv2.BORDER_DEFAULT)
+    k = random.randint(3, 10) * 2 + 1
+    sigmaX = random.randint(1, 24) / 10
+    # print("X", sigmaX)
+    return cv2.GaussianBlur(img, (k, k), sigmaX)
