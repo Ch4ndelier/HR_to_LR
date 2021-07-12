@@ -11,10 +11,14 @@ class Processor(object):
 
     def process(self, img_list, process_list):
         for img_info, p in zip(img_list, process_list):
+            if not img_info[0].endswith('png'):
+                continue
             self.process_single_image(img_info, p)
 
     def process_single_image(self, img_info, process_type):
         out_path = self.config['out_path']
+        if not os.path.exists(out_path):
+            os.mkdir(out_path)
         img_path, img_name = img_info[0], img_info[1]
         cfg = self.config["process"][process_type]
         print("img: ", img_path, "using pipline ", process_type, ":", cfg["pipline"])
@@ -22,7 +26,8 @@ class Processor(object):
         for method in cfg["pipline"]:
             # print("using method " + method)
             img = apply(img, cfg, method)
-        out_path = os.path.join(out_path, img_name)
+        # out_path = os.path.join(out_path, img_name)
+        out_path = os.path.join(out_path, img_name.split('.')[0] + 'x1.png')
         cv2.imwrite(out_path, img)
 
     def get_process_list(self, num_img):

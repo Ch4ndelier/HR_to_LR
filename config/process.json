@@ -1,6 +1,6 @@
 {
-	"in_path":"/Users/liujunyuan/HR_to_LR/data/1k2kminus"
-	,"out_path":"/Users/liujunyuan/HR_to_LR/results/test"
+	"in_path":"/Users/liujunyuan/HR_to_LR/data/DIV2K_train_HR"
+	,"out_path":"/Users/liujunyuan/HR_to_LR/results/DIV2K_train_LR_bicubic"
 	,
 	"process":
 	{
