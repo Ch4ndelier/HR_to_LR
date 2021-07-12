@@ -36,7 +36,7 @@ def get_process_list(config, num_img):
         temp += ratio
         ratio_interval.append(temp)
     # ratio_interval is the ratio prefix of the list
-    # TODO:optimize
+    # TODO:optimize?
     begin = 0
     for itv, p_name in zip(ratio_interval, p_name_list):
         for i in range(begin, int(itv * num_img)):
