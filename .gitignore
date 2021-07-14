@@ -6,3 +6,4 @@ test.py
 *.jpeg
 data/
 **/__pycache__
+config/process.json
