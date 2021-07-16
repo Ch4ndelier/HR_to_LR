@@ -22,6 +22,7 @@ class Processor(object):
         img_path, img_name = img_info[0], img_info[1]
         cfg = self.config["process"][process_type]
         print("img: ", img_path, "using pipline ", process_type, ":", cfg["pipline"])
+        print("img: {} using pipline {} : {}".format(img_path, process_type, cfg["pipline"]))
         img = cv2.imread(img_path)
         for method in cfg["pipline"]:
             # print("using method " + method)
