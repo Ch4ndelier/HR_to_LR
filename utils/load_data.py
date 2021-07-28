@@ -5,7 +5,7 @@ import numpy as np
 
 
 def load_config():
-    with open("config/process.json") as f:
+    with open("config/test/bicubic.json") as f:
         config = json.load(f)
     return config
 

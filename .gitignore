@@ -8,3 +8,4 @@ data/
 **/__pycache__
 config/process.json
 7_20_test.py
+/config/test
