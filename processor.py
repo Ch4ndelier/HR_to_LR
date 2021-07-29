@@ -46,12 +46,20 @@ class Processor(object):
         for ratio in ratio_list:
             temp += ratio
             ratio_interval.append(temp)
+        # print(ratio_interval)
         # ratio_interval is the ratio prefix of the list
         # TODO:optimize?
         begin = 0
         for itv, p_name in zip(ratio_interval, p_name_list):
+            # print(num_img)
+            # print(itv, itv * num_img, int(itv * num_img))
             for i in range(begin, int(itv * num_img)):
                 process_list[i] = p_name
             begin = int(itv * num_img)
+        # fix 0
+        for i, v in enumerate(process_list):
+            if v == 0:
+                process_list[i] = p_name_list[-1]
         print(process_list)
+        # exit()
         return process_list
