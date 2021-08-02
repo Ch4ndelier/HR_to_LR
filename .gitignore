@@ -9,3 +9,6 @@ data/
 config/process.json
 7_20_test.py
 /config/test
+extract_subimgs_single.py
+gather_path.py
+paths.txt

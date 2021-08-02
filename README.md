@@ -33,15 +33,7 @@ Here is an example of the `process.json` file.
 }
 ```
 
-2. check `utils/load_data` to make sure you load the right json file.
 
-```
-def load_config():
-    with open("config/test/bicubic.json") as f:
-        config = json.load(f)
-    return config
-```
+2. Then run
 
-3. Then run
-
-`python demo.py`
+`python demo.py -opt config/process.json`

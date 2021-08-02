@@ -4,8 +4,8 @@ import cv2
 import numpy as np
 
 
-def load_config():
-    with open("config/test/bicubic.json") as f:
+def load_config(config="config/process.json"):
+    with open(config) as f:
         config = json.load(f)
     return config
 

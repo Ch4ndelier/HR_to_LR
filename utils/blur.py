@@ -17,6 +17,6 @@ def add_blur(img, cfg):
     else:
         if sigmaX_down == 0:
             sigmaX_down = 0.01
-        sigmaX = random.randint(sigmaX_down * 100, sigmaX_up * 100) / 100
+        sigmaX = random.randint(int(sigmaX_down * 100), int(sigmaX_up * 100)) / 100
     print("X", sigmaX)
     return cv2.GaussianBlur(img, (k, k), sigmaX)
