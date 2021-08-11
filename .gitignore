@@ -12,3 +12,7 @@ config/process.json
 extract_subimgs_single.py
 gather_path.py
 paths.txt
+
+poisson_test.py
+gray_test.py
+test_sinc.py
