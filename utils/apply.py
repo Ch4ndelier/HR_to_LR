@@ -3,6 +3,7 @@ from utils.noise import add_noise
 from utils.blur import add_blur
 from utils.jpeg import go_jpeg
 from utils.patch_noise import add_patch_noise
+from utils.sinc import sinc_filter
 import random
 
 
@@ -16,6 +17,8 @@ def apply(x, cfg, method):
         return go_jpeg(x, q)
     elif method == 'noise':
         return add_noise(x)
+    elif method == 'sinc':
+        return sinc_filter(x)
     elif method == 'patch_noise':
         return add_patch_noise(x)
     elif method == 'upsample':
