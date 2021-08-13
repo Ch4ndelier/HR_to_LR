@@ -68,7 +68,7 @@ def sinc(img):
     kernel_size = 21
 
     omega_c = np.random.uniform(np.pi / 3, np.pi)
-    omega_c = np.pi
+    omega_c = np.pi / 3
     sinc_kernel = circular_lowpass_kernel(omega_c, kernel_size, pad_to=21)
     sinc_kernel = torch.FloatTensor(sinc_kernel)
 
