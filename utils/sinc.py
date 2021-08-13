@@ -62,13 +62,12 @@ def tensor_to_np(tensor):
     return img
 
 
-def sinc(img):
+def sinc_filter(img):
     kernel_range = [2 * v + 1 for v in range(3, 11)]
     kernel_size = random.choice(kernel_range)
     kernel_size = 21
 
     omega_c = np.random.uniform(np.pi / 3, np.pi)
-    omega_c = np.pi / 3
     sinc_kernel = circular_lowpass_kernel(omega_c, kernel_size, pad_to=21)
     sinc_kernel = torch.FloatTensor(sinc_kernel)
 
