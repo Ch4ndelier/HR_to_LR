@@ -5,9 +5,10 @@ from utils.jpeg import go_jpeg
 from utils.patch_noise import add_patch_noise
 from utils.sinc import sinc_filter
 import random
+import numpy as np
 
 
-def apply(x, cfg, method):
+def apply(x, cfg, cfg_total, method):
     if method == 'downsample':
         return img_downsampling(x, scale=cfg['downsample_scale'], method=cfg['downsample_method'])
     elif method == 'blur':
@@ -16,9 +17,13 @@ def apply(x, cfg, method):
         q = random.randint(cfg['jpeg_quality_l'], cfg['jpeg_quality_h'])
         return go_jpeg(x, q)
     elif method == 'noise':
-        return add_noise(x)
+        return add_noise(x, cfg_total['noise_level'])
     elif method == 'sinc':
-        return sinc_filter(x)
+        if np.random.uniform() < cfg_total["sinc_prob"]:
+            print("sinc")
+            return sinc_filter(x)
+        else:
+            return x
     elif method == 'patch_noise':
         return add_patch_noise(x)
     elif method == 'upsample':

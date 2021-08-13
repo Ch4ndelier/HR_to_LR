@@ -17,16 +17,17 @@ class Processor(object):
 
     def process_single_image(self, img_info, process_type):
         out_path = self.config['out_path']
+        config_total = self.config
         if not os.path.exists(out_path):
             os.mkdir(out_path)
         img_path, img_name = img_info[0], img_info[1]
         cfg = self.config["process"][process_type]
-        print("img: ", img_path, "using pipline ", process_type, ":", cfg["pipline"])
+        # print("img: ", img_path, "using pipline ", process_type, ":", cfg["pipline"])
         print("img: {} using pipline {} : {}".format(img_path, process_type, cfg["pipline"]))
         img = cv2.imread(img_path)
         for method in cfg["pipline"]:
             # print("using method " + method)
-            img = apply(img, cfg, method)
+            img = apply(img, cfg, config_total, method)
         # out_path = os.path.join(out_path, img_name)
         out_path = os.path.join(out_path, img_name.split('.')[0] + 'x1.png')
         cv2.imwrite(out_path, img)

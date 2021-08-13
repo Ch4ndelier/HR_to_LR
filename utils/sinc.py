@@ -4,7 +4,6 @@ import cv2
 from scipy import special
 import torch
 from torch.nn import functional as F
-import torchvision.transforms as transforms
 
 
 def filter2D(img, kernel):
@@ -55,11 +54,40 @@ def circular_lowpass_kernel(cutoff, kernel_size, pad_to=0):
     return kernel
 
 
-def tensor_to_np(tensor):
+def tensor2np(tensor):
     tensor = tensor.clamp(0.0, 1.0)
     img = tensor.mul(255).byte()
     img = img.cpu().numpy().squeeze(0).transpose((1, 2, 0))
     return img
+
+
+def img2tensor(imgs, bgr2rgb=True, float32=True):
+    """Numpy array to tensor.
+
+    Args:
+        imgs (list[ndarray] | ndarray): Input images.
+        bgr2rgb (bool): Whether to change bgr to rgb.
+        float32 (bool): Whether to change to float32.
+
+    Returns:
+        list[tensor] | tensor: Tensor images. If returned results only have
+            one element, just return tensor.
+    """
+
+    def _totensor(img, bgr2rgb, float32):
+        if img.shape[2] == 3 and bgr2rgb:
+            if img.dtype == 'float64':
+                img = img.astype('float32')
+            img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        img = torch.from_numpy(img.transpose(2, 0, 1))
+        if float32:
+            img = img.float()
+        return img
+
+    if isinstance(imgs, list):
+        return [_totensor(img, bgr2rgb, float32) for img in imgs]
+    else:
+        return _totensor(imgs, bgr2rgb, float32)
 
 
 def sinc_filter(img):
@@ -68,16 +96,17 @@ def sinc_filter(img):
     kernel_size = 21
 
     omega_c = np.random.uniform(np.pi / 3, np.pi)
+    # omega_c = np.random.uniform(np.pi / 5)
     sinc_kernel = circular_lowpass_kernel(omega_c, kernel_size, pad_to=21)
     sinc_kernel = torch.FloatTensor(sinc_kernel)
-
-    transf = transforms.ToTensor()
-    img = transf(img)
-    #print(img)
-    img = img.unsqueeze(0)
-    #print(img.shape)
+    # print(sinc_kernel)
+    # print(img)
+    img = img2tensor(img, bgr2rgb=False)
+    img = (img.clamp(0.0, 255.0) / 255).unsqueeze(0).float()
+    # print(img)
     out = filter2D(img, sinc_kernel)
-    #print("outshape:", out.shape)
-    out = tensor_to_np(out)
-    #print(out)
+    # print("outshape:", out.shape)
+    out = tensor2np(out)
+    # print(out)
+    # exit(0)
     return out
