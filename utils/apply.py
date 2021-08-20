@@ -23,7 +23,7 @@ def apply(x, cfg, cfg_total, method):
         return add_noise(x, cfg_total['noise_level'])
     elif method == 'sinc':
         if np.random.uniform() < cfg_total["sinc_prob"]:
-            print("sinc")
+            #print("sinc")
             return sinc_filter(x)
         else:
             return x
