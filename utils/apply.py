@@ -17,6 +17,9 @@ def apply(x, cfg, cfg_total, method):
         q = random.randint(cfg['jpeg_quality_l'], cfg['jpeg_quality_h'])
         return go_jpeg(x, q)
     elif method == 'noise':
+        if "noise_level" not in cfg_total:
+            print("Please specify noise level")
+            exit()
         return add_noise(x, cfg_total['noise_level'])
     elif method == 'sinc':
         if np.random.uniform() < cfg_total["sinc_prob"]:
