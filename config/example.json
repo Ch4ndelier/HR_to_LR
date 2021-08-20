@@ -1,12 +1,12 @@
 {
 	"in_path":"/Users/liujunyuan/HR_to_LR/data/DIV2K_train_HR"
 	,"out_path":"/Users/liujunyuan/HR_to_LR/results/DIV2K_train_LR_bicubic"
-	,
-	"process":
+	,"noise_level":4
+	,"process":
 	{
 	"process1":{
 		"data_num_ratio": 1
-		, "pipline":["downsample", "blur", "noise", "upsample", "jpeg", "noise"]
+		, "pipline":["downsample", "blur", "noise", "upsample", "sinc", "jpeg", "noise"]
 		, "downsample_method":"bicubic"
 		, "downsample_scale": 0.5
 		, "jpeg_quality_l": 30
