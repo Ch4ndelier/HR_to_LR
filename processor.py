@@ -11,6 +11,8 @@ class Processor(object):
         print("Build Processor...")
 
     def process(self, img_list, process_list):
+        for key, val in self.config.items():
+            print("{} : {}".format(key, val))
         pbar = ProgressBar(len(process_list))
         for img_info, p in zip(img_list, process_list):
             if not img_info[0].endswith('png'):
