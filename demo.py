@@ -6,6 +6,8 @@ import argparse
 
 parser = argparse.ArgumentParser(description='manual to this script')
 parser.add_argument("-opt", type=str, default=None)
+# TODO: add support for second order
+# parser.add_argument("-sopt", type=str, default=None)
 args = parser.parse_args()
 
 config = load_config(args.opt)
