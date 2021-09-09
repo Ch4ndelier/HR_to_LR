@@ -24,7 +24,7 @@ def apply(x, cfg, cfg_total, method):
     elif method == 'sinc':
         if np.random.uniform() < cfg_total["sinc_prob"]:
             #print("sinc")
-            return sinc_filter(x)
+            return sinc_filter(x, cfg_total["sinc_lower_bound"], cfg_total["sinc_upper_bound"])
         else:
             return x
     elif method == 'patch_noise':

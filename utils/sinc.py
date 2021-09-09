@@ -90,12 +90,12 @@ def img2tensor(imgs, bgr2rgb=True, float32=True):
         return _totensor(imgs, bgr2rgb, float32)
 
 
-def sinc_filter(img):
+def sinc_filter(img, lower=1/3, upper=1):
     kernel_range = [2 * v + 1 for v in range(3, 11)]
     kernel_size = random.choice(kernel_range)
     kernel_size = 21
 
-    omega_c = np.random.uniform(np.pi / 3, np.pi)
+    omega_c = np.random.uniform(np.pi * lower, np.pi * upper)
     # omega_c = np.random.uniform(np.pi / 5)
     sinc_kernel = circular_lowpass_kernel(omega_c, kernel_size, pad_to=21)
     sinc_kernel = torch.FloatTensor(sinc_kernel)
