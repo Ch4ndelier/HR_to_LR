@@ -44,3 +44,8 @@ The pipline can include the following properties:
 2. Then run
 
 `python demo.py -opt config/process.json`
+
+## TODO
+
+- [x] add sinc_filter
+- [ ] Multithreading Implementation
