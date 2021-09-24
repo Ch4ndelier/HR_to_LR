@@ -1,7 +1,7 @@
 from utils.downsampling import img_downsampling
 from utils.noise import add_noise
 from utils.blur import add_blur
-from utils.jpeg import go_jpeg
+from utils.jpeg_encode import go_jpeg
 from utils.patch_noise import add_patch_noise
 from utils.sinc import sinc_filter
 import random
