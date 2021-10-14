@@ -48,4 +48,5 @@ The pipline can include the following properties:
 ## TODO
 
 - [x] add sinc_filter
+- [ ] add rot_blur
 - [ ] Multithreading Implementation
