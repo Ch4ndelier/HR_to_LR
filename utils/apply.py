@@ -4,6 +4,7 @@ from utils.blur import add_blur
 from utils.jpeg_encode import go_jpeg
 from utils.patch_noise import add_patch_noise
 from utils.sinc import sinc_filter
+from utils.rotate import go_rotate
 import random
 import numpy as np
 
@@ -16,6 +17,9 @@ def apply(x, cfg, cfg_total, method):
     elif method == 'jpeg':
         q = random.randint(cfg['jpeg_quality_l'], cfg['jpeg_quality_h'])
         return go_jpeg(x, q)
+    elif method == 'rotate':
+        angle = random.randint(cfg['rot_angle_min'], cfg['rot_angle_max'])
+        return go_rotate(x, angle)
     elif method == 'noise':
         if "noise_level" not in cfg_total:
             print("Please specify noise level")
@@ -24,7 +28,10 @@ def apply(x, cfg, cfg_total, method):
     elif method == 'sinc':
         if np.random.uniform() < cfg_total["sinc_prob"]:
             #print("sinc")
-            return sinc_filter(x, cfg_total["sinc_lower_bound"], cfg_total["sinc_upper_bound"])
+            if "sinc_lower_bound" not in cfg_total or "sinc_upper_upper" not in cfg_total:
+                return sinc_filter(x)
+            else:
+                return sinc_filter(x, cfg_total["sinc_lower_bound"], cfg_total["sinc_upper_bound"])
         else:
             return x
     elif method == 'patch_noise':
