@@ -49,4 +49,5 @@ The pipline can include the following properties:
 
 - [x] add sinc_filter
 - [x] add rot_blur
+- [x] add fixed_sample
 - [ ] Multithreading Implementation

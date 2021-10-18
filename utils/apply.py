@@ -5,11 +5,16 @@ from utils.jpeg_encode import go_jpeg
 from utils.patch_noise import add_patch_noise
 from utils.sinc import sinc_filter
 from utils.rotate import go_rotate
+from utils.fixed_sampling import img_fixed_sampling
 import random
 import numpy as np
 
 
+ori_scale = None
+
+
 def apply(x, cfg, cfg_total, method):
+    global ori_scale
     if method == 'downsample':
         return img_downsampling(x, scale=cfg['downsample_scale'], method=cfg['downsample_method'])
     elif method == 'blur':
@@ -28,7 +33,7 @@ def apply(x, cfg, cfg_total, method):
     elif method == 'sinc':
         if np.random.uniform() < cfg_total["sinc_prob"]:
             #print("sinc")
-            if "sinc_lower_bound" not in cfg_total or "sinc_upper_upper" not in cfg_total:
+            if "sinc_lower_bound" not in cfg_total or "sinc_upper_bound" not in cfg_total:
                 return sinc_filter(x)
             else:
                 return sinc_filter(x, cfg_total["sinc_lower_bound"], cfg_total["sinc_upper_bound"])
@@ -38,6 +43,28 @@ def apply(x, cfg, cfg_total, method):
         return add_patch_noise(x)
     elif method == 'upsample':
         return img_downsampling(x, scale=cfg['upsample_scale'], method=cfg['upsample_method'])
+    elif method == 'fixed_downsample':
+        h, w, c = x.shape
+        ori_scale = (h, w)
+        down_scale_upper_bound = cfg['fixed_downsample_scale_upper_bound']
+        down_scale_lower_bound = cfg['fixed_downsample_scale_lower_bound']
+        if down_scale_upper_bound < down_scale_lower_bound:
+            print("upper bound is lower than lower bound")
+            exit()
+        elif down_scale_upper_bound == down_scale_lower_bound:
+            down_scale = down_scale_upper_bound
+        else:
+            down_scale = random.randint(int(down_scale_lower_bound * 100), int(down_scale_upper_bound * 100)) / 100
+        #down_scale = cfg['fixed_downsample_scale']
+        target_size = (h * down_scale, w * down_scale)
+        return img_fixed_sampling(x, target_size, method=cfg['downsample_method'])
+    elif method == 'fixed_upsample':
+        out_scale = cfg['out_scale']
+        if not ori_scale:
+            print("upsample before downsample!!")
+            exit()
+        target_size = (ori_scale[0] * out_scale, ori_scale[1] * out_scale)
+        return img_fixed_sampling(x, target_size, method=cfg['upsample_method'])
     else:
         print("Undefined method")
         exit()
