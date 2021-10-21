@@ -12,19 +12,19 @@ def go_rotate(image, angle):
     image_tensor = torch.from_numpy(image)
     image_tensor = image_tensor.unsqueeze(0).type(torch.float32)
     image_tensor = pad(image_tensor)
-    print("image_tensor_type: ", type(image_tensor))
-    print("image_tensor_shape: ", image_tensor.size())
+    #print("image_tensor_type: ", type(image_tensor))
+    #print("image_tensor_shape: ", image_tensor.size())
     rot_angel = angle
     rot_image = F.rotate(image_tensor, rot_angel, interpolation=F.InterpolationMode.BILINEAR)
     rot_image = F.rotate(rot_image, -rot_angel, interpolation=F.InterpolationMode.BILINEAR)
     #rot_image = F.rotate(image_tensor, 3, interpolation=F.InterpolationMode.BILINEAR)
     #rot_image = F.rotate(rot_image, -3, interpolation=F.InterpolationMode.BILINEAR)
     rot_image = rot_image.squeeze(0)
-    print("rot_image_size: ", rot_image.size())
+    #print("rot_image_size: ", rot_image.size())
     rot_out = rot_image.numpy()
     rot_out = rot_out.transpose(1, 2, 0)
     rot_out = rot_out[pad_size:pad_size+h, :]
-    print(rot_out.shape)
+    #print(rot_out.shape)
     rot_out = rot_out[:, pad_size:pad_size+w]
-    print(rot_out.shape)
+    #print(rot_out.shape)
     return rot_out
