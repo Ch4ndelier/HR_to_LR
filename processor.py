@@ -2,6 +2,7 @@ import cv2
 from utils.apply import apply
 import os
 from utils.progress_bar import ProgressBar
+from multiprocessing import Pool
 
 
 class Processor(object):
@@ -14,11 +15,25 @@ class Processor(object):
         for key, val in self.config.items():
             print("{} : {}".format(key, val))
         pbar = ProgressBar(len(process_list))
+        #for img_info, p in zip(img_list, process_list):
+        #    if not img_info[0].endswith('png'):
+        #        continue
+        #    self.process_single_image(img_info, p)
+        #    pbar.update()
+        n_thread = 20
+
+        def update(arg):
+            pbar.update(arg)
+
+        pool = Pool(n_thread)
+
         for img_info, p in zip(img_list, process_list):
             if not img_info[0].endswith('png'):
                 continue
-            self.process_single_image(img_info, p)
-            pbar.update()
+            pool.apply_async(self.process_single_image, args=(img_info, p), callback=update)
+        pool.close()
+        pool.join()
+        print('All subprocesses done')
 
     def process_single_image(self, img_info, process_type):
         out_path = self.config['out_path']
