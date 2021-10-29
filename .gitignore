@@ -16,3 +16,4 @@ rotate_test.py
 poisson_test.py
 gray_test.py
 test_sinc.py
+**.json

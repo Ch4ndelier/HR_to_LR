@@ -49,7 +49,7 @@ class Processor(object):
             # print("using method " + method)
             img = apply(img, cfg, config_total, method)
         # out_path = os.path.join(out_path, img_name)
-        out_path = os.path.join(out_path, img_name.split('.')[0] + 'x1.png')
+        out_path = os.path.join(out_path, img_name.split('.')[0] + '.png')
         cv2.imwrite(out_path, img)
 
     def get_process_list(self, num_img):
