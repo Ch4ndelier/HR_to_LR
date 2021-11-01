@@ -14,9 +14,11 @@ scripts to process HR image to LR, you can customize the process.
 Here is an example of the `process.json` file.
 ```
 {
-	"in_path":"../data/DIV2K_train_HR"
-	,"out_path":"junyuan/HR_to_LR/results/DIV2K_train_LR_bicubic"
+	"in_path":"your location"
+	,"out_path":"your location"
 	,"noise_level":4
+	,"sinc_prob": 0.5
+	,"multi-thread": true
 	,"process":
 	{
 	"process1":{
@@ -24,6 +26,8 @@ Here is an example of the `process.json` file.
 		, "pipline":["downsample", "blur", "noise", "upsample", "sinc", "jpeg", "noise"]
 		, "downsample_method":"bicubic"
 		, "downsample_scale": 0.5
+		, "blur_sigma_up": 0.8
+		, "blur_sigma_down": 0.5
 		, "jpeg_quality_l": 30
 		, "jpeg_quality_h": 95
 		, "upsample_method":"bicubic"
@@ -40,6 +44,9 @@ The pipline can include the following properties:
 - jpeg(random from `[jpeg_quality_l, jpeg_quality_h]`)
 - blur(GaussianBlur from `[blur_sigma_down, blur_sigma_up]`)
 - sinc_filter(can introduce ringing and overshoot artifacts)
+- fixed_downsample(sample method which fixes the size, the stable version of downsample/upsample)
+
+to debug, we suggest you set `"multi-thread": false`
 
 2. Then run
 

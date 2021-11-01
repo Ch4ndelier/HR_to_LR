@@ -48,10 +48,8 @@ def apply(x, cfg, cfg_total, method):
         ori_scale = (h, w)
         down_scale_upper_bound = cfg['fixed_downsample_scale_upper_bound']
         down_scale_lower_bound = cfg['fixed_downsample_scale_lower_bound']
-        if down_scale_upper_bound < down_scale_lower_bound:
-            print("upper bound is lower than lower bound")
-            exit()
-        elif down_scale_upper_bound == down_scale_lower_bound:
+        assert down_scale_upper_bound >= down_scale_lower_bound, "upper bound is lower than lower bound"
+        if down_scale_upper_bound == down_scale_lower_bound:
             down_scale = down_scale_upper_bound
         else:
             down_scale = random.randint(int(down_scale_lower_bound * 100), int(down_scale_upper_bound * 100)) / 100
@@ -60,11 +58,8 @@ def apply(x, cfg, cfg_total, method):
         return img_fixed_sampling(x, target_size, method=cfg['downsample_method'])
     elif method == 'fixed_upsample':
         out_scale = cfg['out_scale']
-        if not ori_scale:
-            print("upsample before downsample!!")
-            exit()
+        assert ori_scale, "upsample before downsample!!"
         target_size = (ori_scale[0] * out_scale, ori_scale[1] * out_scale)
         return img_fixed_sampling(x, target_size, method=cfg['upsample_method'])
     else:
-        print("Undefined method")
-        exit()
+        assert False, "Undefined method!"
