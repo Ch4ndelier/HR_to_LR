@@ -41,7 +41,7 @@ The pipline can include the following properties:
 - downsample
 - upsample
 - noise(random from `[0, noise_level]`)
-- jpeg(random from `[jpeg_quality_l, jpeg_quality_h]`)
+- jpeg(random from `[jpeg_quality_l, jpeg_quality_h]`),now using opencv encode implementation
 - blur(GaussianBlur from `[blur_sigma_down, blur_sigma_up]`)
 - sinc_filter(can introduce ringing and overshoot artifacts)
 - fixed_downsample(sample method which fixes the size, the stable version of downsample/upsample)
