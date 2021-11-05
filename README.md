@@ -44,6 +44,7 @@ The pipline can include the following properties:
 - jpeg(random from `[jpeg_quality_l, jpeg_quality_h]`),now using opencv encode implementation
 - blur(GaussianBlur from `[blur_sigma_down, blur_sigma_up]`)
 - sinc_filter(can introduce ringing and overshoot artifacts)
+- rot_blur(rotate image and then rotate back, can cause blur and edge artifacts)
 - fixed_downsample(sample method which fixes the size, the stable version of downsample/upsample)
 
 to debug, we suggest you set `"multi-thread": false`
