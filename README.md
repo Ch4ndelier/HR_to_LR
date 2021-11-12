@@ -45,6 +45,7 @@ The pipline can include the following properties:
 - blur(GaussianBlur from `[blur_sigma_down, blur_sigma_up]`)
 - sinc_filter(can introduce ringing and overshoot artifacts)
 - rot_blur(rotate image and then rotate back, can cause blur and edge artifacts)
+- patch_noise(can add noise from a patch)
 - fixed_downsample(sample method which fixes the size, the stable version of downsample/upsample)
 
 to debug, we suggest you set `"multi-thread": false`
