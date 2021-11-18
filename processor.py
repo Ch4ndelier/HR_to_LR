@@ -16,6 +16,7 @@ class Processor(object):
             print("{} : {}".format(key, val))
         pbar = ProgressBar(len(process_list))
 
+        # multi-thread process
         if self.config["multi-thread"]:
             n_thread = 20
 
@@ -28,9 +29,12 @@ class Processor(object):
                 if not img_info[0].endswith('png'):
                     continue
                 pool.apply_async(self.process_single_image, args=(img_info, p), callback=update)
+
             pool.close()
             pool.join()
             print('All subprocesses done')
+
+        # single-thread
         else:
             for img_info, p in zip(img_list, process_list):
                 if not img_info[0].endswith('png'):
@@ -56,6 +60,7 @@ class Processor(object):
         cv2.imwrite(out_path, img)
 
     def get_process_list(self, num_img):
+        # divide the image ratio
         p_dict = self.config["process"]
         ratio_list = []
         p_name_list = []
@@ -64,6 +69,7 @@ class Processor(object):
         for p_name, pipline_dict in p_dict.items():
             p_name_list.append(p_name)
             ratio_list.append(pipline_dict["data_num_ratio"])
+
         ratio_list = [ratio / sum(ratio_list) for ratio in ratio_list]
         ratio_interval = []
         temp = 0
@@ -80,10 +86,8 @@ class Processor(object):
             for i in range(begin, int(itv * num_img)):
                 process_list[i] = p_name
             begin = int(itv * num_img)
-        # fix 0
+        # fill up the missing process
         for i, v in enumerate(process_list):
             if v == 0:
                 process_list[i] = p_name_list[-1]
-        # print(process_list)
-        # exit()
         return process_list

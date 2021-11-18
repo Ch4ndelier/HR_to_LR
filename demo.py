@@ -10,9 +10,13 @@ parser.add_argument("-opt", type=str, default=None)
 # parser.add_argument("-sopt", type=str, default=None)
 args = parser.parse_args()
 
+# get config
 config = load_config(args.opt)
+# get image list
 img_list = get_img_list(config["in_path"])
 random.shuffle(img_list)
 processor = Processor(config)
+# get process list
 process_list = processor.get_process_list(len(img_list))
+# process image
 processor.process(img_list, process_list)

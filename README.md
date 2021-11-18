@@ -58,4 +58,5 @@ to debug, we suggest you set `"multi-thread": false`
 - [x] add sinc_filter
 - [x] add rot_blur
 - [x] add fixed_sample
-- [x] Multithreading Implementation
+- [x] add Multithreading Implementation
+- [ ] add prob mode
