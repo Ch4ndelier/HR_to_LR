@@ -61,3 +61,4 @@ to debug, we suggest you set `"multi-thread": false`
 - [x] add fixed_sample
 - [x] add Multithreading Implementation
 - [ ] add prob mode
+- [ ] add different type of noise
