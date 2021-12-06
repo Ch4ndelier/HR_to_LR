@@ -38,9 +38,10 @@ Here is an example of the `process.json` file.
 ```
 
 The pipline can include the following properties:
+
 - downsample
 - upsample
-- noise(random from `[0, noise_level]`)
+- noise(gauss noise sigma random from `[1, noise_level]`, or poisson noise)
 - jpeg(random from `[jpeg_quality_l, jpeg_quality_h]`),now using opencv encode implementation
 - blur(GaussianBlur from `[blur_sigma_down, blur_sigma_up]`)
 - sinc_filter(can introduce ringing and overshoot artifacts)
@@ -61,4 +62,4 @@ to debug, we suggest you set `"multi-thread": false`
 - [x] add fixed_sample
 - [x] add Multithreading Implementation
 - [ ] add prob mode
-- [ ] add different type of noise
+- [x] add different type of noise
