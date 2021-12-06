@@ -1,5 +1,6 @@
 from utils.downsampling import img_downsampling
 from utils.noise import add_noise
+from utils.poisson_noise import add_poisson_noise
 from utils.blur import add_blur
 from utils.jpeg_encode import go_jpeg
 from utils.patch_noise import add_patch_noise
@@ -29,7 +30,12 @@ def apply(x, cfg, cfg_total, method):
         if "noise_level" not in cfg_total:
             print("Please specify noise level")
             exit()
-        return add_noise(x, cfg_total['noise_level'])
+        p = random.randint(0, 1)
+        if p:
+            return add_noise(x, cfg_total['noise_level'])
+        else:
+            scale = random.randint(5, 30) / 100
+            return add_poisson_noise(x, scale)
     elif method == 'sinc':
         if np.random.uniform() < cfg_total["sinc_prob"]:
             #print("sinc")
