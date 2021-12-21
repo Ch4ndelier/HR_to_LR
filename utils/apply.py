@@ -34,7 +34,7 @@ def apply(x, cfg, cfg_total, method):
         if p:
             return add_noise(x, cfg_total['noise_level'])
         else:
-            scale = random.randint(5, 30) / 100
+            scale = random.randint(5, cfg_total['poisson_level']) / 100
             return add_poisson_noise(x, scale)
     elif method == 'sinc':
         if np.random.uniform() < cfg_total["sinc_prob"]:
