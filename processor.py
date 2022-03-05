@@ -17,8 +17,9 @@ class Processor(object):
         pbar = ProgressBar(len(process_list))
 
         # multi-thread process
+        # TODO: optimize?
         if self.config["multi-thread"]:
-            n_thread = 20
+            n_thread = 10
 
             def update(arg):
                 pbar.update(arg)
@@ -61,6 +62,7 @@ class Processor(object):
 
     def get_process_list(self, num_img):
         # divide the image ratio
+        # TODO: optimize?
         p_dict = self.config["process"]
         ratio_list = []
         p_name_list = []
