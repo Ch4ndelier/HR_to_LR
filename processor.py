@@ -1,6 +1,7 @@
 import cv2
 from utils.apply import apply
 import os
+import random
 from utils.progress_bar import ProgressBar
 from multiprocessing import Pool
 
@@ -36,6 +37,12 @@ class Processor(object):
             print('All subprocesses done')
 
         # single-thread
+        elif self.config["is_random"]:
+            for img_info, p in zip(img_list, process_list):
+                if not img_info[0].endswith('png'):
+                    continue
+                self.process_single_image_random(img_info, p)
+                pbar.update()
         else:
             for img_info, p in zip(img_list, process_list):
                 if not img_info[0].endswith('png'):
@@ -54,6 +61,32 @@ class Processor(object):
         # print("img: {} using pipline {} : {}".format(img_path, process_type, cfg["pipline"]))
         img = cv2.imread(img_path)
         for method in cfg["pipline"]:
+            # print("using method " + method)
+            img = apply(img, cfg, config_total, method)
+        # out_path = os.path.join(out_path, img_name)
+        out_path = os.path.join(out_path, img_name.split('.')[0] + '.png')
+        cv2.imwrite(out_path, img)
+
+    def process_single_image_random(self, img_info, process_type):
+        # random model for random degration
+        out_path = self.config['out_path']
+        config_total = self.config
+        if not os.path.exists(out_path):
+            os.mkdir(out_path)
+        img_path, img_name = img_info[0], img_info[1]
+        cfg = self.config["process"][process_type]
+        # print("img: ", img_path, "using pipline ", process_type, ":", cfg["pipline"])
+        # print("img: {} using pipline {} : {}".format(img_path, process_type, cfg["pipline"]))
+        img = cv2.imread(img_path)
+        random_pipline = [_ for _ in cfg["pipline"]]
+        random.shuffle(random_pipline)
+        key = random_pipline.index("downsample")
+        random_pipline[key] = 'fixed_downsample'
+        key = random_pipline.index("downsample")
+        random_pipline[key] = 'fixed_upsample'
+        random_pipline.append('jpeg')
+        print(random_pipline)
+        for method in random_pipline:
             # print("using method " + method)
             img = apply(img, cfg, config_total, method)
         # out_path = os.path.join(out_path, img_name)

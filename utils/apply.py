@@ -61,11 +61,17 @@ def apply(x, cfg, cfg_total, method):
             down_scale = random.randint(int(down_scale_lower_bound * 100), int(down_scale_upper_bound * 100)) / 100
         #down_scale = cfg['fixed_downsample_scale']
         target_size = (h * down_scale, w * down_scale)
-        return img_fixed_sampling(x, target_size, method=cfg['downsample_method'])
+        if cfg_total['is_random']:
+            return img_fixed_sampling(x, target_size, method=random.choice(cfg['downsample_method_list']))
+        else:
+            return img_fixed_sampling(x, target_size, method=cfg['downsample_method'])
     elif method == 'fixed_upsample':
         out_scale = cfg['out_scale']
         assert ori_scale, "upsample before downsample!!"
         target_size = (ori_scale[0] * out_scale, ori_scale[1] * out_scale)
-        return img_fixed_sampling(x, target_size, method=cfg['upsample_method'])
+        if cfg_total['is_random']:
+            return img_fixed_sampling(x, target_size, method=random.choice(cfg['downsample_method_list']))
+        else:
+            return img_fixed_sampling(x, target_size, method=cfg['upsample_method'])
     else:
         assert False, "Undefined method!"
