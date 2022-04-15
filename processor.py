@@ -85,7 +85,7 @@ class Processor(object):
         key = random_pipline.index("downsample")
         random_pipline[key] = 'fixed_upsample'
         random_pipline.append('jpeg')
-        print(random_pipline)
+        # print(random_pipline)
         for method in random_pipline:
             # print("using method " + method)
             img = apply(img, cfg, config_total, method)
