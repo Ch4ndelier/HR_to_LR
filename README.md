@@ -50,11 +50,7 @@ The pipline can include the following properties:
 - patch_noise(can add noise from a patch)
 - fixed_downsample(sample method which fixes the size, the stable version of downsample/upsample)
 
-<<<<<<< HEAD
-to debug, we strongly suggest you set `"multi-thread": false`
-=======
 to debug or steadily generate pictures, we suggest you set `"multi-thread": false`
->>>>>>> a5b27269b337cccd797f821f859166c25fd75b72
 
 2. Then run
 
