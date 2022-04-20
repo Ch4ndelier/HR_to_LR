@@ -19,7 +19,8 @@ Here is an example of the `process.json` file.
 	,"noise_level":4
 	,"poisson_level":30
 	,"sinc_prob": 0.5
-	,"multi-thread": true
+	,"multi-thread": false
+	,"is_random": false
 	,"process":
 	{
 	"process1":{
