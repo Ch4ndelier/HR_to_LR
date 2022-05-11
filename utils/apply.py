@@ -58,7 +58,7 @@ def apply(x, cfg, cfg_total, method):
         if down_scale_upper_bound == down_scale_lower_bound:
             down_scale = down_scale_upper_bound
         else:
-            down_scale = random.randint(int(down_scale_lower_bound * 100), int(down_scale_upper_bound * 100)) / 100
+            down_scale = random.randint(int(down_scale_lower_bound * 20), int(down_scale_upper_bound * 20)) / 20
         #down_scale = cfg['fixed_downsample_scale']
         target_size = (h * down_scale, w * down_scale)
         if cfg_total['is_random']:
