@@ -43,6 +43,14 @@ class Processor(object):
                     continue
                 self.process_single_image_random(img_info, p)
                 pbar.update()
+
+        elif self.config["is_random_dropout"]:
+            for img_info, p in zip(img_list, process_list):
+                if not img_info[0].endswith('png'):
+                    continue
+                self.process_single_image_random_dropout(img_info, p)
+                pbar.update()
+
         else:
             for img_info, p in zip(img_list, process_list):
                 if not img_info[0].endswith('png'):
@@ -67,6 +75,61 @@ class Processor(object):
         out_path = os.path.join(out_path, img_name.split('.')[0] + '.png')
         cv2.imwrite(out_path, img)
 
+    def process_single_image_random_dropout(self, img_info, process_type):
+        # random model for random degration
+        out_path = self.config['out_path']
+        config_total = self.config
+        if not os.path.exists(out_path):
+            os.mkdir(out_path)
+        img_path, img_name = img_info[0], img_info[1]
+        cfg = self.config["process"][process_type]
+        # print("img: ", img_path, "using pipline ", process_type, ":", cfg["pipline"])
+        # print("img: {} using pipline {} : {}".format(img_path, process_type, cfg["pipline"]))
+        img = cv2.imread(img_path)
+        random_pipline = [_ for _ in cfg["pipline"]]
+        random.shuffle(random_pipline)
+        dropout_downsample_pro = random.random()
+        dropout_noise_pro = random.random()
+        dropout_jpeg_pro = random.random()
+        dropout_blur_pro = random.random()
+        dropout_rot_pro = random.random()
+        if dropout_downsample_pro > cfg["dropout_downsample_pro"]:
+            key = random_pipline.index("downsample")
+            random_pipline[key] = 'fixed_downsample'
+            key = random_pipline.index("downsample")
+            random_pipline[key] = 'fixed_upsample'
+
+        random_dropout_pipline = []
+        degradation_set = set()
+        for degra in random_pipline:
+            if degra not in degradation_set:
+                degradation_set.add(degra)
+                random_dropout_pipline.append(degra)
+            else:
+                if degra == 'noise':
+                    if dropout_noise_pro > cfg["dropout_noise_pro"]:
+                        random_dropout_pipline.append(degra)
+                elif degra == 'blur':
+                    if dropout_blur_pro > cfg["dropout_blur_pro"]:
+                        random_dropout_pipline.append(degra)
+                elif degra == 'jpeg':
+                    if dropout_jpeg_pro > cfg["dropout_jpeg_pro"]:
+                        random_dropout_pipline.append(degra)
+                elif degra == 'rotate':
+                    if dropout_rot_pro > cfg["dropout_rot_pro"]:
+                        random_dropout_pipline.append(degra)
+                
+        random_dropout_pipline.append('jpeg')
+        # print(random_pipline)
+        # print(random_dropout_pipline)
+        # exit()
+        for method in random_dropout_pipline:
+            # print("using method " + method)
+            img = apply(img, cfg, config_total, method)
+        # out_path = os.path.join(out_path, img_name)
+        out_path = os.path.join(out_path, img_name.split('.')[0] + '.png')
+        cv2.imwrite(out_path, img)
+        
     def process_single_image_random(self, img_info, process_type):
         # random model for random degration
         out_path = self.config['out_path']

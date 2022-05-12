@@ -17,7 +17,10 @@ ori_scale = None
 def apply(x, cfg, cfg_total, method):
     global ori_scale
     if method == 'downsample':
-        return img_downsampling(x, scale=cfg['downsample_scale'], method=cfg['downsample_method'])
+        if cfg_total["is_random_dropout"]:
+            return img_downsampling(x, scale=cfg['downsample_scale'], method=random.choice(cfg['downsample_method_list']))
+        else:
+            return img_downsampling(x, scale=cfg['downsample_scale'], method=cfg['downsample_method'])
     elif method == 'blur':
         return add_blur(x, cfg)
     elif method == 'jpeg':
@@ -62,7 +65,7 @@ def apply(x, cfg, cfg_total, method):
         # precision: 0.05
         #down_scale = cfg['fixed_downsample_scale']
         target_size = (h * down_scale, w * down_scale)
-        if cfg_total['is_random']:
+        if cfg_total['is_random'] or cfg_total['is_random_dropout']:
             return img_fixed_sampling(x, target_size, method=random.choice(cfg['downsample_method_list']))
         else:
             return img_fixed_sampling(x, target_size, method=cfg['downsample_method'])
@@ -70,7 +73,7 @@ def apply(x, cfg, cfg_total, method):
         out_scale = cfg['out_scale']
         assert ori_scale, "upsample before downsample!!"
         target_size = (ori_scale[0] * out_scale, ori_scale[1] * out_scale)
-        if cfg_total['is_random']:
+        if cfg_total['is_random'] or cfg_total['is_random_dropout']:
             return img_fixed_sampling(x, target_size, method=random.choice(cfg['downsample_method_list']))
         else:
             return img_fixed_sampling(x, target_size, method=cfg['upsample_method'])
