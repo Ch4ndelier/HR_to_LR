@@ -65,4 +65,4 @@ to debug or steadily generate pictures, we suggest you set `"multi-thread": fals
 - [x] add Multithreading Implementation
 - [x] add different type of noise(now possion and gaussian)
 - [x] add random mode
-- [ ] add prob mode
+- [x] add random dropout prob mode
