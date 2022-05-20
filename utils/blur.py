@@ -3,10 +3,11 @@ import random
 
 
 def add_blur(img, cfg):
-    #k = random.randint(3, 10) * 2 + 1
-    k = 21
-    #TODO: k sigmaX 1to1
-    #sigmaX = random.randint (24 / 10)
+    k = 0
+    if cfg["fix_kernel"]:
+        k = 21
+    else:
+        k = random.randint(3, 10) * 2 + 1
     assert ("blur_sigma_up" in cfg) and ("blur_sigma_down" in cfg), "please specify blur sigma"
     sigmaX_up = cfg["blur_sigma_up"]
     sigmaX_down = cfg["blur_sigma_down"]
