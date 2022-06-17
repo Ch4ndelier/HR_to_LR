@@ -3,6 +3,7 @@ from utils.noise import add_noise
 from utils.poisson_noise import add_poisson_noise
 from utils.blur import add_blur
 from utils.jpeg_encode import go_jpeg
+from utils.noise_multi import add_noise_multi
 from utils.patch_noise import add_patch_noise
 from utils.sinc import sinc_filter
 from utils.rotate import go_rotate
@@ -50,6 +51,8 @@ def apply(x, cfg, cfg_total, method):
             return x
     elif method == 'patch_noise':
         return add_patch_noise(x)
+    elif method == 'noise_multi':
+        return add_noise_multi(x)
     elif method == 'upsample':
         return img_downsampling(x, scale=cfg['upsample_scale'], method=cfg['upsample_method'])
     elif method == 'fixed_downsample':
