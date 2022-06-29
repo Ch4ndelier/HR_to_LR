@@ -34,11 +34,14 @@ def apply(x, cfg, cfg_total, method):
         if "noise_level" not in cfg_total:
             print("Please specify noise level")
             exit()
-        p = random.randint(0, 1)
-        if p:
+        if cfg["noise_type"] == "gauss":
             return add_noise(x, cfg_total['noise_level'])
         else:
-            scale = random.randint(5, cfg_total['poisson_level']) / 100
+            p = random.randint(0, 1)
+            if p:
+                return add_noise(x, cfg_total['noise_level'])
+            else:
+                scale = random.randint(5, cfg_total['poisson_level']) / 100
             return add_poisson_noise(x, scale)
     elif method == 'sinc':
         if np.random.uniform() < cfg_total["sinc_prob"]:
